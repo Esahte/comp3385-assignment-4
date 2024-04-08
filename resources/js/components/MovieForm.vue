@@ -1,21 +1,15 @@
 <script setup>
 const saveMovie = async () => {
-    const movieForm = document.getElementById('movieForm');
-    const formData = new FormData(movieForm);
+    const formData = new FormData(document.getElementById('movieForm'));
 
-    await fetch('/api/v1/movies', {
+    const response = await fetch('/api/v1/movies', {
         method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-        },
+        headers: { 'Accept': 'application/json' },
         body: formData
-    }).then((response) => {
-        return response.json();
-    }).then((data) => {
-        console.log(data);
-    }).catch((error) => {
-        console.error(error);
     });
+
+    const data = await response.json();
+    console.log(data);
 }
 </script>
 

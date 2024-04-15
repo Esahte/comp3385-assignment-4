@@ -4,7 +4,7 @@ const saveMovie = async () => {
 
     const response = await fetch('/api/v1/movies', {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
+        headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') },
         body: formData
     });
 

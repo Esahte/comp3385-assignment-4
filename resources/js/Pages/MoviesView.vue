@@ -3,15 +3,15 @@ import {ref, onMounted} from 'vue';
 
 const movies = ref([]);
 
-onMounted(() => {
-    fetch('/api/v1/movies', {
+onMounted(async () => {
+    await fetch('/api/v1/movies', {
         method: 'GET',
-        headers: {'Accept': 'application/json'}
+        headers: {'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') }
     })
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            movies.value = data;
+            movies.value = data.movies;
         })
         .catch((error) => console.error(error));
 });

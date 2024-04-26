@@ -1,6 +1,8 @@
 <script setup>
 import {onMounted, ref} from 'vue';
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const isLoggedIn = ref(false);
 
 onMounted(() => {
@@ -18,6 +20,7 @@ const logout = () => {
             console.log(data);
             localStorage.removeItem('token');
             isLoggedIn.value = false;
+            router.push('/');
         }).catch(error => console.error(error));
 };
 </script>

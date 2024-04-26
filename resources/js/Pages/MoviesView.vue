@@ -4,16 +4,17 @@ import {ref, onMounted} from 'vue';
 const movies = ref([]);
 
 onMounted(async () => {
-    await fetch('/api/v1/movies', {
-        method: 'GET',
-        headers: {'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            movies.value = data.movies;
-        })
-        .catch((error) => console.error(error));
+    try {
+        const response = await fetch('/api/v1/movies', {
+            method: 'GET',
+            headers: {'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        });
+        const data = await response.json();
+        console.log(data);
+        movies.value = data.movies;
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 const getCardStyle = (poster) => {

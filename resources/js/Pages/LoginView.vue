@@ -6,18 +6,21 @@ const router = useRouter();
 const authorize = async () => {
     const formData = new FormData(document.getElementById('loginForm'));
 
-    // get API token
-    await fetch('/api/v1/login', {
+    const response = await fetch('/api/v1/login', {
         method: 'POST',
-        headers: {
-            'Accept': 'application/json'
-        },
+        headers: { 'Accept': 'application/json' },
         body: formData
-    }).then((response) => response.json())
-        .then((data) => {
-            localStorage.setItem('token', data.token)
-            router.push('/movies');
-        });
+    });
+
+    if (!response.ok) {
+        // Handle error, e.g., show an error message
+        console.error('Login failed');
+        return;
+    }
+
+    const data = await response.json();
+    localStorage.setItem('token', data.token);
+    await router.push('/movies');
 }
 </script>
 
